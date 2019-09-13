@@ -1,230 +1,56 @@
-/*
-  Object oriented design is commonly used in video games.  For this part of the assignment you will be implementing several constructor functions with their correct inheritance hierarchy.
-
-  In this file you will be creating three constructor functions: GameObject, CharacterStats, Humanoid.  
-
-  At the bottom of this file are 3 objects that all end up inheriting from Humanoid.  Use the objects at the bottom of the page to test your constructor functions.
-  
-  Each constructor function has unique properties and methods that are defined in their block comments below:
-*/
-
-/*
-  === GameObject ===
-  * createdAt
-  * name
-  * dimensions (These represent the character's size in the video game)
-  * destroy() // prototype method that returns: `${this.name} was removed from the game.`
-*/
-class GameObject {
-    constructor(characterAttr) {
-        this.createdAt = characterAttr.createdAt;
-        this.name = characterAttr.name;
-        this.dimensions = characterAttr.dimensions;
+// CODE here for your Lambda Classes
+class Person {
+    constructor(PersonAtrr) {
+        this.name = PersonAtrr.name;
+        this.age = PersonAtrr.age;
+        this.location = PersonAtrr.location;
     }
-    destroy() {
-        return `${this.name} was removed from the game.`
+    speak() {
+        return `Hello my name is ${this.name} I am from ${this.location}`;
     }
-
-}
-
-
-
-/*
-  === CharacterStats ===
-  * healthPoints
-  * takeDamage() // prototype method -> returns the string '<object name> took damage.'
-  * should inherit destroy() from GameObject's prototype
-*/
-class CharacterStats extends GameObject {
-
-    constructor(CharacStats) {
-        super(CharacStats)
-        this.healthPoints = CharacStats.healthPoints;
+};
+class Instructor extends Person {
+    constructor(InstructorAtrr) {
+        super(InstructorAtrr);
+        this.specialty = InstructorAtrr.specialty;
+        this.favLanguage = InstructorAtrr.favLanguage;
+        this.catchPhrase = InstructorAtrr.catchPhrase;
     }
-    takeDamage() {
-        return `${this.name} took damage.`
+    demo(subject) {
+        return `Today we are learning about ${subject}`;
     }
-}
-
-
-
-
-/*
-  === Humanoid (Having an appearance or character resembling that of a human.) ===
-  * team
-  * weapons
-  * language
-  * greet() // prototype method -> returns the string '<object name> offers a greeting in <object language>.'
-  * should inherit destroy() from GameObject through CharacterStats
-  * should inherit takeDamage() from CharacterStats
-*/
-class Humanoid extends CharacterStats {
-
-    constructor(HumanoidAtrr) {
-        super(HumanoidAtrr)
-        this.team = HumanoidAtrr.team;
-        this.weapons = HumanoidAtrr.weapons;
-        this.language = HumanoidAtrr.language;
+    grade(student) {
+        return `${student.name} receives a perfect score on ${subject}`
     }
-    greet() {
-        return `${this.name} offers a greeting in ${this.language}.`;
+};
+
+class Students extends Person {
+    constructor(StudentsAtrr) {
+        super(StudentsAtrr);
+        this.previousBackground = StudentsAtrr.previousBackground;
+        this.className = StudentsAtrr.className;
+        this.favSubjects = StudentsAtrr.favSubjects;
+    }
+    listsSubjects() {
+        return `${this.favSubjects}`;
+    }
+    PRAssignment(subject) {
+        return `${this.name} has submitted a PR for ${subject}`
+    }
+    sprintChallenge(subject) {
+        return `${this.name }has begun sprint challenge on ${subject}`
+    }
+};
+class ProjectManagers extends Instructor {
+    constructor(ProjectManagersAtrr) {
+        super(ProjectManagersAtrr);
+        this.gradClassName = ProjectManagersAtrr.gradClassName;
+        this.favInstructor = ProjectManagersAtrr.favInstructor;
+    }
+    standUp() {
+        return `${This.name} announces to ${gradClassName}, @channel standy times!​​​​​`;
+    }
+    debugsCode() {
+        return `${this.name} debugs ${Students.name}'s code on ${this.favSubjects}`
     }
 }
-
-/*
- * Inheritance chain: GameObject -> CharacterStats -> Humanoid
- * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
- * Instances of CharacterStats should have all of the same properties as GameObject.
- */
-
-// Test you work by un-commenting these 3 objects and the list of console logs below:
-
-
-const mage = new Humanoid({
-    createdAt: new Date(),
-    dimensions: {
-        length: 2,
-        width: 1,
-        height: 1,
-    },
-    healthPoints: 5,
-    name: 'Bruce',
-    team: 'Mage Guild',
-    weapons: [
-        'Staff of Shamalama',
-    ],
-    language: 'Common Tongue',
-});
-
-const swordsman = new Humanoid({
-    createdAt: new Date(),
-    dimensions: {
-        length: 2,
-        width: 2,
-        height: 2,
-    },
-    healthPoints: 15,
-    name: 'Sir Mustachio',
-    team: 'The Round Table',
-    weapons: [
-        'Giant Sword',
-        'Shield',
-    ],
-    language: 'Common Tongue',
-});
-
-const archer = new Humanoid({
-    createdAt: new Date(),
-    dimensions: {
-        length: 1,
-        width: 2,
-        height: 4,
-    },
-    healthPoints: 10,
-    name: 'Lilith',
-    team: 'Forest Kingdom',
-    weapons: [
-        'Bow',
-        'Dagger',
-    ],
-    language: 'Elvish',
-});
-
-console.log(mage.createdAt); // Today's date
-console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
-console.log(swordsman.healthPoints); // 15
-console.log(mage.name); // Bruce
-console.log(swordsman.team); // The Round Table
-console.log(mage.weapons); // Staff of Shamalama
-console.log(archer.language); // Elvish
-console.log(archer.greet()); // Lilith offers a greeting in Elvish.
-console.log(mage.takeDamage()); // Bruce took damage.
-console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-
-
-// Stretch task: 
-// * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function. 
-class Villain extends Humanoid {
-    constructor(VillainAtrr) {
-        super(VillainAtrr);
-    }
-    GameOver(weapon) {
-        if (weapon === "homeRun") {
-            return `${this.team} won the game`;
-        } else if (weapon === "hit") {
-            return `${this.team} is close to win the game`
-        } else {
-            return "Yey !!! Phillies lost!"
-        }
-    }
-}
-// * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
-
-
-
-
-class Hero extends Humanoid {
-
-    constructor(HeroAtrr) {
-        super(HeroAtrr)
-    }
-    GameOver(weapon) {
-        if (weapon === "homeRun") {
-            return `${this.team} won the game!!!!`;
-        } else if (weapon === "hit") {
-            return `${this.team} is close to win the game`
-        } else {
-            return "Ohhh no!!! Mets Lost :("
-        }
-    }
-}
-
-
-
-// * Create two new objects, one a villain and one a hero and fight it out with methods!
-
-const MrMets = new Hero({
-    createdAt: new Date(),
-    dimensions: {
-        length: 5,
-        width: 5,
-        height: 3,
-    },
-    healthPoints: 50,
-    name: 'Mr Mets',
-    team: 'Mets',
-    weapons: [
-        'homeRun',
-        'hit',
-        'walk',
-        'strikesOut'
-    ],
-    language: 'New York\'s language',
-});
-
-const PhilliesP = new Villain({
-    createdAt: new Date(),
-    dimensions: {
-        length: 5,
-        width: 5,
-        height: 3,
-    },
-    healthPoints: 50,
-    name: 'Phillie phanatic',
-    team: 'Phillies',
-    weapons: [
-        'homeRun',
-        'hit',
-        'walk',
-        'strikesOut'
-
-    ],
-    language: 'Philadelphia`s Language',
-});
-
-
-console.log(MrMets.greet())
-console.log(PhilliesP.greet())
-console.log(PhilliesP.GameOver("hit"));
-console.log(PhilliesP.GameOver("strikesOut"));
-console.log(MrMets.GameOver("homeRun"));
